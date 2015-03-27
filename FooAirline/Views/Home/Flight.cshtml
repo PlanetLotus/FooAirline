@@ -1,14 +1,36 @@
-﻿@model FooAirline.Models.FlightViewModel
+﻿@using System.Collections.ObjectModel;
+@using FooAirline.Models;
+@model Tuple<FlightViewModel, ReadOnlyCollection<PassengerViewModel>>
 
 @{
     ViewBag.Title = "Flight";
 }
 
-<h1>Flight @Model.FlightNumber</h1>
+<h1>Flight @Model.Item1.FlightNumber</h1>
 
 <div class="row">
     <div class="col-md-4">
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-passenger-modal" style="margin-bottom: 10px">Add Passenger</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+            </tr>
+        @foreach (var passenger in @Model.Item2)
+        {
+            <tr>
+                <td>@passenger.FirstName</td>
+                <td>@passenger.MiddleName</td>
+                <td>@passenger.LastName</td>
+            </tr>
+        }
+        </table>
     </div>
 </div>
 
@@ -18,7 +40,7 @@
             <form action="/passenger/add/" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add Passenger to Flight @Model.FlightNumber</h4>
+                    <h4 class="modal-title">Add Passenger to Flight @Model.Item1.FlightNumber</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -35,7 +57,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="flightId" value="@Model.Id" />
+                    <input type="hidden" name="flightId" value="@Model.Item1.Id" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

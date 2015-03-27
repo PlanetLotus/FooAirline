@@ -38,7 +38,11 @@ namespace FooAirline.Controllers
         {
             FlightViewModel flight = AirlineService.GetFlight(id);
 
-            return View(flight);
+            ReadOnlyCollection<PassengerViewModel> passengers = AirlineService.GetPassengers(id);
+
+            Tuple<FlightViewModel, ReadOnlyCollection<PassengerViewModel>> viewModel = new Tuple<FlightViewModel, ReadOnlyCollection<PassengerViewModel>>(flight, passengers);
+
+            return View(viewModel);
         }
 
         [HttpPost]

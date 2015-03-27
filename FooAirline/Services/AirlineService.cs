@@ -68,6 +68,27 @@ namespace FooAirline.Services
                 sqlConnection.Execute(insert, new { flightNumber });
         }
 
+        public static ReadOnlyCollection<PassengerViewModel> GetPassengers(int flightId)
+        {
+            const string query = @"
+                SELECT
+                    FirstName,
+                    MiddleName,
+                    LastName
+                FROM
+                    dbo.Passenger
+                WHERE
+                    FlightId = @flightId;";
+
+            IEnumerable<DbPassenger> dbPassengers;
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                dbPassengers = sqlConnection.Query<DbPassenger>(query, new { flightId });
+
+            return AirlineMapper.Map(dbPassengers);
+        }
+
         public static void AddPassenger(int flightId, string firstName, string middleName, string lastName)
         {
             const string insert = @"

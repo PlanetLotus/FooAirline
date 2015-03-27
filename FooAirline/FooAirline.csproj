@@ -175,6 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AirlineService.cs" />
     <Compile Include="Services\DbFlight.cs" />
+    <Compile Include="Services\DbPassenger.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

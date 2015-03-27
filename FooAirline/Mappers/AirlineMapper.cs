@@ -26,5 +26,23 @@ namespace FooAirline.Mappers
                 FlightNumber = dbFlight.FlightNumber
             };
         }
+
+        public static ReadOnlyCollection<PassengerViewModel> Map(IEnumerable<DbPassenger> dbPassengers)
+        {
+            return dbPassengers
+                .Select(Map)
+                .ToList()
+                .AsReadOnly();
+        }
+
+        public static PassengerViewModel Map(DbPassenger dbPassenger)
+        {
+            return new PassengerViewModel
+            {
+                FirstName = dbPassenger.FirstName,
+                MiddleName = dbPassenger.MiddleName,
+                LastName = dbPassenger.LastName
+            };
+        }
     }
 }
