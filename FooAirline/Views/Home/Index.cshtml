@@ -14,7 +14,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(f => flight.FlightNumber)
+                @Html.ActionLink("Flight " + flight.FlightNumber, "Flight", new { id = flight.Id })
             </td>
         </tr>
     }

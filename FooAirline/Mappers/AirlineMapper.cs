@@ -20,7 +20,11 @@ namespace FooAirline.Mappers
 
         public static FlightViewModel Map(DbFlight dbFlight)
         {
-            return new FlightViewModel { FlightNumber = dbFlight.FlightNumber };
+            return new FlightViewModel
+            {
+                Id = dbFlight.Id,
+                FlightNumber = dbFlight.FlightNumber
+            };
         }
     }
 }

@@ -7,6 +7,7 @@ namespace FooAirline.Models
 {
     public class FlightViewModel
     {
+        public int Id { get; set; }
         public string FlightNumber { get; set; }
     }
 
