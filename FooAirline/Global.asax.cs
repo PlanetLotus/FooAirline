@@ -17,5 +17,13 @@ namespace FooAirline
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error()
+        {
+            // A simple catch-all for application-level errors
+            // With more time I'd make this handle each specific error rather than just handling all exceptions the same way
+            Exception ex = Server.GetLastError();
+            Response.Redirect("/Error");
+        }
     }
 }

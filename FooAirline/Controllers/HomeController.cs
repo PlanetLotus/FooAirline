@@ -18,6 +18,11 @@ namespace FooAirline.Controllers
             return View(flights);
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult AddFlight()
         {
@@ -42,7 +47,13 @@ namespace FooAirline.Controllers
 
         public ActionResult Flight(int id)
         {
+            if (id < 0)
+                throw new ArgumentOutOfRangeException("id");
+
             FlightViewModel flight = AirlineService.GetFlight(id);
+
+            if (flight == null)
+                throw new InvalidOperationException(string.Format("Flight ID {0} not found.", id));
 
             ReadOnlyCollection<PassengerViewModel> passengers = AirlineService.GetPassengers(id);
 
