@@ -13,7 +13,7 @@ namespace FooAirline.Controllers
     {
         public ActionResult Index()
         {
-            ReadOnlyCollection<FlightViewModel> flights = AirlineService.GetFlights();
+            ReadOnlyCollection<FlightViewModel> flights = AirlineService.GetActiveFlights();
 
             return View(flights);
         }
@@ -30,7 +30,15 @@ namespace FooAirline.Controllers
 
             AirlineService.CreateFlight(flightNumber);
 
+            // TODO: Redirect to flight page
             Response.Redirect("/");
+        }
+
+        public ActionResult Flight(int id)
+        {
+            FlightViewModel flight = AirlineService.GetFlight(id);
+
+            return View(flight);
         }
 
         public ActionResult About()

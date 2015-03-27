@@ -13,7 +13,7 @@ namespace FooAirline.Services
 {
     public static class AirlineService
     {
-        public static ReadOnlyCollection<FlightViewModel> GetFlights()
+        public static ReadOnlyCollection<FlightViewModel> GetActiveFlights()
         {
             const string query = @"
                 SELECT
@@ -33,9 +33,33 @@ namespace FooAirline.Services
             return AirlineMapper.Map(dbFlights);
         }
 
+        public static FlightViewModel GetFlight(int id)
+        {
+            const string query = @"
+                SELECT
+                    Id,
+                    FlightNumber
+                FROM
+                    dbo.Flight
+                WHERE
+                    Id = @id;";
+
+            DbFlight dbFlight;
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                dbFlight = sqlConnection.Query<DbFlight>(query, new { id }).FirstOrDefault();
+
+            // TODO: Gracefully handle null dbFlight
+            if (dbFlight == null)
+                return null;
+
+            return AirlineMapper.Map(dbFlight);
+        }
+
         public static void CreateFlight(string flightNumber)
         {
-            string insert = @"
+            const string insert = @"
                 INSERT INTO dbo.Flight (FlightNumber)
                 VALUES (@flightNumber);";
 
