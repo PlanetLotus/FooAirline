@@ -1,0 +1,22 @@
+﻿@model IEnumerable<FooAirline.Models.FlightViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>FooAirlines</h1>
+
+<h2>Flights</h2>
+
+<div class="row">
+    <table class="table">
+    @foreach (var flight in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(f => flight.FlightNumber)
+            </td>
+        </tr>
+    }
+    </table>
+</div>
