@@ -33,15 +33,15 @@ namespace FooAirline.Services
             return AirlineMapper.Map(dbFlights);
         }
 
-        public static void CreateFlight()
+        public static void CreateFlight(string flightNumber)
         {
-            const string insert = @"
-                INSERT INTO dbo.Flight
-                VALUES (2, 200, 1);";
+            string insert = @"
+                INSERT INTO dbo.Flight (FlightNumber)
+                VALUES (@flightNumber);";
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-                sqlConnection.Execute(insert);
+                sqlConnection.Execute(insert, new { flightNumber });
         }
     }
 }

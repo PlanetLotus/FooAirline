@@ -18,6 +18,21 @@ namespace FooAirline.Controllers
             return View(flights);
         }
 
+        [HttpPost]
+        public void AddFlight()
+        {
+            string flightNumber = Request.Form["flightNumber"];
+
+            if (string.IsNullOrWhiteSpace(flightNumber))
+                return;
+
+            // TODO: Make sure an ACTIVE flight with this number doesn't already exist!
+
+            AirlineService.CreateFlight(flightNumber);
+
+            Response.Redirect("/");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
