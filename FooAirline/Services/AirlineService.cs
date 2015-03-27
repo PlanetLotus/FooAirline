@@ -57,15 +57,16 @@ namespace FooAirline.Services
             return AirlineMapper.Map(dbFlight);
         }
 
-        public static void CreateFlight(string flightNumber)
+        public static int CreateFlight(string flightNumber)
         {
             const string insert = @"
                 INSERT INTO dbo.Flight (FlightNumber)
+                OUTPUT INSERTED.Id
                 VALUES (@flightNumber);";
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-                sqlConnection.Execute(insert, new { flightNumber });
+                return sqlConnection.Query<int>(insert, new { flightNumber }).SingleOrDefault();
         }
 
         public static ReadOnlyCollection<PassengerViewModel> GetPassengers(int flightId)

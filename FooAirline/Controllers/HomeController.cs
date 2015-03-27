@@ -19,19 +19,25 @@ namespace FooAirline.Controllers
         }
 
         [HttpPost]
-        public void AddFlight()
+        public ActionResult AddFlight()
         {
             string flightNumber = Request.Form["flightNumber"];
 
             if (string.IsNullOrWhiteSpace(flightNumber))
-                return;
+                throw new InvalidOperationException("FlightNumber must be given.");
 
             // TODO: Make sure an ACTIVE flight with this number doesn't already exist!
 
-            AirlineService.CreateFlight(flightNumber);
+            int flightId = AirlineService.CreateFlight(flightNumber);
 
-            // TODO: Redirect to flight page
-            Response.Redirect("/");
+            FlightViewModel flight = AirlineService.GetFlight(flightId);
+
+            // We just created the flight, so there won't be any passengers. This can be empty.
+            ReadOnlyCollection<PassengerViewModel> passengers = new ReadOnlyCollection<PassengerViewModel>(new List<PassengerViewModel>());
+
+            Tuple<FlightViewModel, ReadOnlyCollection<PassengerViewModel>> viewModel = new Tuple<FlightViewModel, ReadOnlyCollection<PassengerViewModel>>(flight, passengers);
+
+            return View("Flight", viewModel);
         }
 
         public ActionResult Flight(int id)
