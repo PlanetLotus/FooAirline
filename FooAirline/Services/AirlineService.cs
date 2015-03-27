@@ -20,7 +20,9 @@ namespace FooAirline.Services
                     Id,
                     FlightNumber
                 FROM
-                    dbo.Flight;";
+                    dbo.Flight
+                WHERE
+                    IsActive = 1;";
 
             IEnumerable<DbFlight> dbFlights;
 
@@ -35,7 +37,7 @@ namespace FooAirline.Services
         {
             const string insert = @"
                 INSERT INTO dbo.Flight
-                VALUES (1, 100);";
+                VALUES (2, 200, 1);";
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
