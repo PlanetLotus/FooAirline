@@ -16,21 +16,28 @@
 
 <div class="row">
     <div class="col-md-4">
+        @if (!@Model.Item2.Any())
+        {
+        <p>No passengers found for Flight @Model.Item1.FlightNumber. Please add them using the button above.</p>
+        }
+        else
+        {
         <table class="table">
             <tr>
                 <th>First Name</th>
                 <th>Middle Name</th>
                 <th>Last Name</th>
             </tr>
-        @foreach (var passenger in @Model.Item2)
-        {
+            @foreach (var passenger in @Model.Item2)
+            {
             <tr>
                 <td>@passenger.FirstName</td>
                 <td>@passenger.MiddleName</td>
                 <td>@passenger.LastName</td>
             </tr>
-        }
+            }
         </table>
+        }
     </div>
 </div>
 
