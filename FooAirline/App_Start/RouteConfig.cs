@@ -14,6 +14,12 @@ namespace FooAirline
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Add Passenger",
+                url: "passenger/add",
+                defaults: new { controller = "Home", action = "AddPassenger" }
+            );
+
+            routes.MapRoute(
                 name: "Add Flight",
                 url: "flight/add",
                 defaults: new { controller = "Home", action = "AddFlight" }
@@ -22,7 +28,7 @@ namespace FooAirline
             routes.MapRoute(
                 name: "Get Flight",
                 url: "flight/{id}",
-                defaults: new { controller = "Home", action = "GetFlight" }
+                defaults: new { controller = "Home", action = "Flight" }
             );
 
             routes.MapRoute(

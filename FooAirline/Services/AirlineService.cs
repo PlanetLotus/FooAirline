@@ -67,5 +67,16 @@ namespace FooAirline.Services
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
                 sqlConnection.Execute(insert, new { flightNumber });
         }
+
+        public static void AddPassenger(int flightId, string firstName, string middleName, string lastName)
+        {
+            const string insert = @"
+                INSERT INTO dbo.Passenger (FlightId, FirstName, MiddleName, LastName)
+                VALUES (@flightId, @firstName, @middleName, @lastName);";
+
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                sqlConnection.Execute(insert, new { flightId, firstName, middleName, lastName });
+        }
     }
 }

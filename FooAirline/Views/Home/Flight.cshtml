@@ -6,3 +6,40 @@
 
 <h1>Flight @Model.FlightNumber</h1>
 
+<div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-passenger-modal" style="margin-bottom: 10px">Add Passenger</button>
+    </div>
+</div>
+
+<div id="add-passenger-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/passenger/add/" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Passenger to Flight @Model.FlightNumber</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="first-name-input">First Name</label>
+                        <input id="first-name-input" name="firstName" type="text" class="form-control" placeholder="Matthew">
+                    </div>
+                    <div class="form-group">
+                        <label for="middle-name-input">Middle Name (Optional)</label>
+                        <input id="middle-name-input" name="middleName" type="text" class="form-control" placeholder="Allen">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name-input">Last Name</label>
+                        <input id="last-name-input" name="lastName" type="text" class="form-control" placeholder="Messmer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="flightId" value="@Model.Id" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

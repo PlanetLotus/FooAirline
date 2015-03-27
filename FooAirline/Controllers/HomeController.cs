@@ -41,6 +41,32 @@ namespace FooAirline.Controllers
             return View(flight);
         }
 
+        [HttpPost]
+        public void AddPassenger()
+        {
+            // TODO: Add proper error handling for user's benefit
+            int flightId;
+            if (!int.TryParse(Request.Form["flightId"], out flightId))
+                return;
+
+            string firstName = Request.Form["firstName"];
+            string middleName = Request.Form["middleName"];
+            string lastName = Request.Form["lastName"];
+
+            if (flightId < 0)
+                return;
+
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+                return;
+
+            if (middleName.Trim() == "")
+                middleName = null;
+
+            AirlineService.AddPassenger(flightId, firstName, middleName, lastName);
+
+            Response.Redirect("~/flight/" + flightId);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
